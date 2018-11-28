@@ -1,5 +1,6 @@
 <?php
 namespace TYPO3\CMS\Cal\Model\ICalendar;
+
 /**
  * Class representing vTimezones.
  *
@@ -19,15 +20,18 @@ namespace TYPO3\CMS\Cal\Model\ICalendar;
  *
  * @package Horde_iCalendar
  */
-class Daylight extends \TYPO3\CMS\Cal\Model\ICalendar {
-	function getType() {
-		return 'daylight';
-	}
-	function parsevCalendar($data, $base = 'VCALENDAR', $charset = 'utf8', $clear = true) {
-		parent::parsevCalendar ($data, 'DAYLIGHT');
-	}
-	function exportvCalendar() {
-		return parent::_exportvData ('DAYLIGHT');
-	}
+class Daylight extends \TYPO3\CMS\Cal\Model\ICalendar
+{
+    public function getType()
+    {
+        return 'daylight';
+    }
+    public function parsevCalendar($data, $base = 'VCALENDAR', $charset = 'utf8', $clear = true)
+    {
+        parent::parsevCalendar($data, 'DAYLIGHT');
+    }
+    public function exportvCalendar()
+    {
+        return parent::_exportvData('DAYLIGHT');
+    }
 }
-?>

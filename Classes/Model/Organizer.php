@@ -1,5 +1,6 @@
 <?php
 namespace TYPO3\CMS\Cal\Model;
+
 /**
  * This file is part of the TYPO3 extension Calendar Base (cal).
  *
@@ -23,106 +24,112 @@ namespace TYPO3\CMS\Cal\Model;
  * @package TYPO3
  * @subpackage cal
  */
-class Organizer extends \TYPO3\CMS\Cal\Model\LocationModel {
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param array $row
-	 *        	array
-	 * @param string $pidList
-	 *        	to search in
-	 */
-	function __construct($row, $pidList) {
-		$this->setObjectType ('organizer');
-		$this->setType ('tx_cal_organizer');
-		parent::__construct ($this->getType ());
-		$this->createOrganizer ($row);
-		$this->templatePath = $this->conf ['view.'] ['organizer.'] ['organizerModelTemplate'];
-	}
-	function createOrganizer($row) {
-		$this->createLocation ($row);
-	}
-	function renderOrganizer() {
-		return $this->fillTemplate ('###TEMPLATE_ORGANIZER_ORGANIZER###');
-	}
-	function isUserAllowedToEdit($feUserUid = '', $feGroupsArray = array ()) {
-		$rightsObj = &\TYPO3\CMS\Cal\Utility\Registry::Registry ('basic', 'rightscontroller');
-		if (! $rightsObj->isViewEnabled ('edit_organizer')) {
-			return false;
-		}
-		if ($rightsObj->isCalAdmin ()) {
-			return true;
-		}
-		
-		if ($feUserUid == '') {
-			$feUserUid = $rightsObj->getUserId ();
-		}
-		if (empty ($feGroupsArray)) {
-			$feGroupsArray = $rightsObj->getUserGroups ();
-		}
-		
-		$isSharedUser = $this->isSharedUser ($feUserUid, $feGroupsArray);
-		$isAllowedToEditOrganizers = $rightsObj->isAllowedToEditOrganizer ();
-		$isAllowedToEditOwnOrganizersOnly = $rightsObj->isAllowedToEditOnlyOwnOrganizer ();
-		
-		if ($isAllowedToEditOwnOrganizersOnly) {
-			return $isSharedUser;
-		}
-		return $isAllowedToEditOrganizers;
-	}
-	function isUserAllowedToDelete($feUserUid = '', $feGroupsArray = array ()) {
-		$rightsObj = &\TYPO3\CMS\Cal\Utility\Registry::Registry ('basic', 'rightscontroller');
-		if (! $rightsObj->isViewEnabled ('delete_organizer')) {
-			return false;
-		}
-		if ($rightsObj->isCalAdmin ()) {
-			return true;
-		}
-		
-		if ($feUserUid == '') {
-			$feUserUid = $rightsObj->getUserId ();
-		}
-		if (empty ($feGroupsArray)) {
-			$feGroupsArray = $rightsObj->getUserGroups ();
-		}
-		$isSharedUser = $this->isSharedUser ($feUserUid, $feGroupsArray);
-		$isAllowedToDeleteOrganizers = $rightsObj->isAllowedToDeleteOrganizer ();
-		$isAllowedToDeleteOwnOrganizersOnly = $rightsObj->isAllowedToDeleteOnlyOwnOrganizer ();
-		
-		if ($isAllowedToDeleteOwnOrganizersOnly) {
-			return $isSharedUser;
-		}
-		return $isAllowedToDeleteOrganizers;
-	}
-	function getEditLink(& $template, & $sims, & $rems, $view) {
-		$editlink = '';
-		if ($this->isUserAllowedToEdit ()) {
-			$this->initLocalCObject ($this->getValuesAsArray ());
-			$this->local_cObj->setCurrentVal ($this->controller->pi_getLL ('l_edit_organizer'));
-			$this->controller->getParametersForTyposcriptLink ($this->local_cObj->data, array (
-					'view' => 'edit_organizer',
-					'type' => $this->getType (),
-					'uid' => $this->getUid () 
-			), $this->conf ['cache'], $this->conf ['clear_anyway'], $this->conf ['view.'] ['calendar.'] ['editOrganizerViewPid']);
-			$editlink = $this->local_cObj->cObjGetSingle ($this->conf ['view.'] [$view . '.'] ['organizer.'] ['editLink'], $this->conf ['view.'] [$view . '.'] ['organizer.'] ['editLink.']);
-		}
-		if ($this->isUserAllowedToDelete ()) {
-			$this->initLocalCObject ($this->getValuesAsArray ());
-			
-			$this->local_cObj->setCurrentVal ($this->controller->pi_getLL ('l_delete_organizer'));
-			$this->controller->getParametersForTyposcriptLink ($this->local_cObj->data, array (
-					'view' => 'delete_organizer',
-					'type' => $this->getType (),
-					'uid' => $this->getUid () 
-			), $this->conf ['cache'], $this->conf ['clear_anyway'], $this->conf ['view.'] ['organizer.'] ['deleteOrganizerViewPid']);
-			$editlink .= $this->local_cObj->cObjGetSingle ($this->conf ['view.'] [$view . '.'] ['organizer.'] ['deleteLink'], $this->conf ['view.'] [$view . '.'] ['organizer.'] ['deleteLink.']);
-		}
-		return $editlink;
-	}
-	function renderOrganizerFor($viewType, $subpartSuffix = '') {
-		return $this->fillTemplate ('###TEMPLATE_ORGANIZER_' . strtoupper ($viewType) . ($subpartSuffix ? '_' : '') . $subpartSuffix . '###');
-	}
+class Organizer extends \TYPO3\CMS\Cal\Model\LocationModel
+{
+    
+    /**
+     * Constructor
+     *
+     * @param array $row
+     *        	array
+     * @param string $pidList
+     *        	to search in
+     */
+    public function __construct($row, $pidList)
+    {
+        $this->setObjectType('organizer');
+        $this->setType('tx_cal_organizer');
+        parent::__construct($this->getType());
+        $this->createOrganizer($row);
+        $this->templatePath = $this->conf ['view.'] ['organizer.'] ['organizerModelTemplate'];
+    }
+    public function createOrganizer($row)
+    {
+        $this->createLocation($row);
+    }
+    public function renderOrganizer()
+    {
+        return $this->fillTemplate('###TEMPLATE_ORGANIZER_ORGANIZER###');
+    }
+    public function isUserAllowedToEdit($feUserUid = '', $feGroupsArray = array())
+    {
+        $rightsObj = &\TYPO3\CMS\Cal\Utility\Registry::Registry('basic', 'rightscontroller');
+        if (! $rightsObj->isViewEnabled('edit_organizer')) {
+            return false;
+        }
+        if ($rightsObj->isCalAdmin()) {
+            return true;
+        }
+        
+        if ($feUserUid == '') {
+            $feUserUid = $rightsObj->getUserId();
+        }
+        if (empty($feGroupsArray)) {
+            $feGroupsArray = $rightsObj->getUserGroups();
+        }
+        
+        $isSharedUser = $this->isSharedUser($feUserUid, $feGroupsArray);
+        $isAllowedToEditOrganizers = $rightsObj->isAllowedToEditOrganizer();
+        $isAllowedToEditOwnOrganizersOnly = $rightsObj->isAllowedToEditOnlyOwnOrganizer();
+        
+        if ($isAllowedToEditOwnOrganizersOnly) {
+            return $isSharedUser;
+        }
+        return $isAllowedToEditOrganizers;
+    }
+    public function isUserAllowedToDelete($feUserUid = '', $feGroupsArray = array())
+    {
+        $rightsObj = &\TYPO3\CMS\Cal\Utility\Registry::Registry('basic', 'rightscontroller');
+        if (! $rightsObj->isViewEnabled('delete_organizer')) {
+            return false;
+        }
+        if ($rightsObj->isCalAdmin()) {
+            return true;
+        }
+        
+        if ($feUserUid == '') {
+            $feUserUid = $rightsObj->getUserId();
+        }
+        if (empty($feGroupsArray)) {
+            $feGroupsArray = $rightsObj->getUserGroups();
+        }
+        $isSharedUser = $this->isSharedUser($feUserUid, $feGroupsArray);
+        $isAllowedToDeleteOrganizers = $rightsObj->isAllowedToDeleteOrganizer();
+        $isAllowedToDeleteOwnOrganizersOnly = $rightsObj->isAllowedToDeleteOnlyOwnOrganizer();
+        
+        if ($isAllowedToDeleteOwnOrganizersOnly) {
+            return $isSharedUser;
+        }
+        return $isAllowedToDeleteOrganizers;
+    }
+    public function getEditLink(& $template, & $sims, & $rems, $view)
+    {
+        $editlink = '';
+        if ($this->isUserAllowedToEdit()) {
+            $this->initLocalCObject($this->getValuesAsArray());
+            $this->local_cObj->setCurrentVal($this->controller->pi_getLL('l_edit_organizer'));
+            $this->controller->getParametersForTyposcriptLink($this->local_cObj->data, array(
+                    'view' => 'edit_organizer',
+                    'type' => $this->getType(),
+                    'uid' => $this->getUid()
+            ), $this->conf ['cache'], $this->conf ['clear_anyway'], $this->conf ['view.'] ['calendar.'] ['editOrganizerViewPid']);
+            $editlink = $this->local_cObj->cObjGetSingle($this->conf ['view.'] [$view . '.'] ['organizer.'] ['editLink'], $this->conf ['view.'] [$view . '.'] ['organizer.'] ['editLink.']);
+        }
+        if ($this->isUserAllowedToDelete()) {
+            $this->initLocalCObject($this->getValuesAsArray());
+            
+            $this->local_cObj->setCurrentVal($this->controller->pi_getLL('l_delete_organizer'));
+            $this->controller->getParametersForTyposcriptLink($this->local_cObj->data, array(
+                    'view' => 'delete_organizer',
+                    'type' => $this->getType(),
+                    'uid' => $this->getUid()
+            ), $this->conf ['cache'], $this->conf ['clear_anyway'], $this->conf ['view.'] ['organizer.'] ['deleteOrganizerViewPid']);
+            $editlink .= $this->local_cObj->cObjGetSingle($this->conf ['view.'] [$view . '.'] ['organizer.'] ['deleteLink'], $this->conf ['view.'] [$view . '.'] ['organizer.'] ['deleteLink.']);
+        }
+        return $editlink;
+    }
+    public function renderOrganizerFor($viewType, $subpartSuffix = '')
+    {
+        return $this->fillTemplate('###TEMPLATE_ORGANIZER_' . strtoupper($viewType) . ($subpartSuffix ? '_' : '') . $subpartSuffix . '###');
+    }
 }
-
-?>

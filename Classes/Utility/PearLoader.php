@@ -1,5 +1,6 @@
 <?php
 namespace TYPO3\CMS\Cal\Utility;
+
 /**
  * This file is part of the TYPO3 extension Calendar Base (cal).
  *
@@ -13,15 +14,13 @@ namespace TYPO3\CMS\Cal\Utility;
  * The TYPO3 extension Calendar Base (cal) project - inspiring people to share!
  */
 
-if (! class_exists ('Date', FALSE)) {
-	if (! defined ('PATH_SEPARATOR')) {
-		define ('PATH_SEPARATOR', OS_WINDOWS ? ';' : ':');
-	}
-	
-	$path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath ('cal') . 'res/PEAR/';
-	
-	// set_include_path(get_include_path(). PATH_SEPARATOR . $path);
-	require_once ($path . 'Date.php');
+if (! class_exists('Date', false)) {
+    if (! defined('PATH_SEPARATOR')) {
+        define('PATH_SEPARATOR', OS_WINDOWS ? ';' : ':');
+    }
+    
+    $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('cal') . 'res/PEAR/';
+    
+    // set_include_path(get_include_path(). PATH_SEPARATOR . $path);
+    require_once($path . 'Date.php');
 }
-
-?>

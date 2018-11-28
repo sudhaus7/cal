@@ -1,5 +1,6 @@
 <?php
 namespace TYPO3\CMS\Cal\Service;
+
 /**
  * This file is part of the TYPO3 extension Calendar Base (cal).
  *
@@ -17,11 +18,11 @@ namespace TYPO3\CMS\Cal\Service;
  *
  * @author Mario Matzulla <mario(at)matzullas.de>
  */
-abstract class AbstractModul extends \TYPO3\CMS\Cal\Service\BaseService {
-	
-	/**
-	 * @param Object $moduleCaller 	Instance of the caller
-	 */
-	public abstract function start(&$moduleCaller) ;
+abstract class AbstractModul extends \TYPO3\CMS\Cal\Service\BaseService
+{
+    
+    /**
+     * @param Object $moduleCaller 	Instance of the caller
+     */
+    abstract public function start(&$moduleCaller) ;
 }
-?>

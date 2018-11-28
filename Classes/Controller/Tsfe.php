@@ -27,7 +27,7 @@ class Tsfe extends TypoScriptFrontendController
      * @param string $header
      * @param string $reason
      */
-    function pageNotFoundHandler($code, $header = '', $reason = '')
+    public function pageNotFoundHandler($code, $header = '', $reason = '')
     {
         // do nothing
     }
@@ -36,7 +36,7 @@ class Tsfe extends TypoScriptFrontendController
      * @param string $reason
      * @param string $header
      */
-    function pageNotFoundAndExit($reason = '', $header = '')
+    public function pageNotFoundAndExit($reason = '', $header = '')
     {
         // do nothing
     }

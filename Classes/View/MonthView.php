@@ -22,48 +22,48 @@ use TYPO3\CMS\Cal\Utility\Functions;
  *
  * @author Mario Matzulla <mario(at)matzullas.de>
  */
-class MonthView extends \TYPO3\CMS\Cal\View\BaseView {
-	
-	public function __construct () {
-		parent::__construct ();
-	}
-	
-	/**
-	 * Looks for month markers.
-	 * 
-	 * @param $master_array array
-	 *        	to be drawn.
-	 * @param $getdate integer
-	 *        	of the event
-	 * @return string HTML output.
-	 */
-	function drawMonth(&$master_array, $getdate) {
-		// Resetting viewarray, to make sure we always get the current events
-		$this->viewarray = false;
-		$this->_init ($master_array);
-		$page = '';
-		if ($this->conf ['view.'] ['month.'] ['monthMakeMiniCal']) {
-			$incFile = $GLOBALS['TSFE']->tmpl->getFileName($this->conf ['view.'] ['month.'] ['monthMiniTemplate']);
-			if($incFile != null && file_exists (PATH_site . $incFile )) {
-				$page = Functions::getContent ($this->conf ['view.'] ['month.'] ['monthMiniTemplate']);
-			}
-			
-			if ($page == '') {
-				$page = $this->conf ['view.'] ['month.'] ['monthMiniTemplate'];
-				if (! (preg_match ('/###([A-Z0-9_|+-]*)###/', $page))) {
-					return '<h3>calendar: no template file found:</h3>' . $this->conf ['view.'] ['month.'] ['monthMiniTemplate'] . '<br />Please check your template record and add both cal items at "include static (from extension)"';
-				}
-			}
-		} else {
-			$page = Functions::getContent ($this->conf ['view.'] ['month.'] ['monthTemplate']);
-			if ($page == '') {
-				return '<h3>calendar: no template file found:</h3>' . $this->conf ['view.'] ['month.'] ['monthTemplate'] . '<br />Please check your template record and add both cal items at "include static (from extension)"';
-			}
-		}
-		
-		$rems = array ();
-		return $this->finish ($page, $rems);
-	}
+class MonthView extends \TYPO3\CMS\Cal\View\BaseView
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
+    /**
+     * Looks for month markers.
+     *
+     * @param $master_array array
+     *        	to be drawn.
+     * @param $getdate integer
+     *        	of the event
+     * @return string HTML output.
+     */
+    public function drawMonth(&$master_array, $getdate)
+    {
+        // Resetting viewarray, to make sure we always get the current events
+        $this->viewarray = false;
+        $this->_init($master_array);
+        $page = '';
+        if ($this->conf ['view.'] ['month.'] ['monthMakeMiniCal']) {
+            $incFile = $GLOBALS['TSFE']->tmpl->getFileName($this->conf ['view.'] ['month.'] ['monthMiniTemplate']);
+            if ($incFile != null && file_exists(PATH_site . $incFile)) {
+                $page = Functions::getContent($this->conf ['view.'] ['month.'] ['monthMiniTemplate']);
+            }
+            
+            if ($page == '') {
+                $page = $this->conf ['view.'] ['month.'] ['monthMiniTemplate'];
+                if (! (preg_match('/###([A-Z0-9_|+-]*)###/', $page))) {
+                    return '<h3>calendar: no template file found:</h3>' . $this->conf ['view.'] ['month.'] ['monthMiniTemplate'] . '<br />Please check your template record and add both cal items at "include static (from extension)"';
+                }
+            }
+        } else {
+            $page = Functions::getContent($this->conf ['view.'] ['month.'] ['monthTemplate']);
+            if ($page == '') {
+                return '<h3>calendar: no template file found:</h3>' . $this->conf ['view.'] ['month.'] ['monthTemplate'] . '<br />Please check your template record and add both cal items at "include static (from extension)"';
+            }
+        }
+        
+        $rems = array();
+        return $this->finish($page, $rems);
+    }
 }
-
-?>

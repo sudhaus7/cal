@@ -1,0 +1,26 @@
+{
+  "name": "sudhaus7/cal",
+  "description": "A calendar combining all the functions of the existing calendar extensions plus adding some new features. It is based on the ical standard.",
+  "type": "typo3-cms-extension",
+  "keywords": ["TYPO3 CMS", "cal", "iCal"],
+  "homepage": "https://git.typo3.org/TYPO3CMS/Extensions/gridelements.git",
+  "license": "GPL-2.0+",
+  "version": "1.11.1",
+  "support": {
+    "issues": "https://forge.typo3.org/projects/extension-cal"
+  },
+  "require": {
+    "typo3/cms-core": ">=7.6.2,<8.0",
+    "johngrogg/ics-parser": ">=2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TYPO3\\CMS\\Cal": "Classes/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.11.1"
+    }
+  }
+}

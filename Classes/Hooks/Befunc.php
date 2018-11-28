@@ -1,5 +1,6 @@
 <?php
 namespace TYPO3\CMS\Cal\Hooks;
+
 /**
  * This file is part of the TYPO3 extension Calendar Base (cal).
  *
@@ -19,25 +20,25 @@ namespace TYPO3\CMS\Cal\Hooks;
  *
  * @author Mario Matzulla <mario(at)matzullas.de>
  */
-class Befunc {
-	
-	public function preprocessvalue(&$conf) {
-		if ($conf ['tx_cal_event']) {
-			unset ($conf ['eval']);
-		}
-	}
-	
-	public function postprocessvalue(&$conf) {
-		if ($conf ['colConf'] ['tx_cal_event']) {
-			$value = new \TYPO3\CMS\Cal\Model\CalDate ($conf ['value'] . '000000');
-			if ($GLOBALS ['TYPO3_CONF_VARS'] ['SYS'] ['USdateFormat'] == '1') {
-				$conf ['value'] = $value->format ('%d.%m.%Y');
-			} else {
-				$conf ['value'] = $value->format ('%d-%m-%Y');
-			}
-		}
-		return $conf ['value'];
-	}
+class Befunc
+{
+    public function preprocessvalue(&$conf)
+    {
+        if ($conf ['tx_cal_event']) {
+            unset($conf ['eval']);
+        }
+    }
+    
+    public function postprocessvalue(&$conf)
+    {
+        if ($conf ['colConf'] ['tx_cal_event']) {
+            $value = new \TYPO3\CMS\Cal\Model\CalDate($conf ['value'] . '000000');
+            if ($GLOBALS ['TYPO3_CONF_VARS'] ['SYS'] ['USdateFormat'] == '1') {
+                $conf ['value'] = $value->format('%d.%m.%Y');
+            } else {
+                $conf ['value'] = $value->format('%d-%m-%Y');
+            }
+        }
+        return $conf ['value'];
+    }
 }
-
-?>

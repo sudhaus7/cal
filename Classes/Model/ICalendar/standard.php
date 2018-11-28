@@ -1,5 +1,6 @@
 <?php
 namespace TYPO3\CMS\Cal\Model\ICalendar;
+
 /**
  * Class representing vTimezones.
  *
@@ -14,16 +15,18 @@ namespace TYPO3\CMS\Cal\Model\ICalendar;
  * @since Horde 3.0
  * @package Horde_iCalendar
  */
-class standard extends \TYPO3\CMS\Cal\Model\ICalendar {
-	function getType() {
-		return 'standard';
-	}
-	function parsevCalendar($data, $base = 'VCALENDAR', $charset = 'utf8', $clear = true) {
-		parent::parsevCalendar ($data, 'STANDARD');
-	}
-	function exportvCalendar() {
-		return parent::_exportvData ('STANDARD');
-	}
+class standard extends \TYPO3\CMS\Cal\Model\ICalendar
+{
+    public function getType()
+    {
+        return 'standard';
+    }
+    public function parsevCalendar($data, $base = 'VCALENDAR', $charset = 'utf8', $clear = true)
+    {
+        parent::parsevCalendar($data, 'STANDARD');
+    }
+    public function exportvCalendar()
+    {
+        return parent::_exportvData('STANDARD');
+    }
 }
-
-?>

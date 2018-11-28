@@ -17,10 +17,5 @@
     "psr-4": {
       "TYPO3\\CMS\\Cal": "Classes/"
     }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.11.1"
-    }
   }
 }

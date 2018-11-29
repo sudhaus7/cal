@@ -43,11 +43,9 @@ class ICalendarService extends \TYPO3\CMS\Cal\Service\BaseService
      */
     public function find($uid, $pidList = '')
     {
-        $enableFields = '';
+        $enableFields = $this->cObj->enableFields('tx_cal_calendar');
         if (TYPO3_MODE == 'BE') {
             $enableFields = BackendUtility::BEenableFields('tx_cal_calendar') . ' AND tx_cal_calendar.deleted = 0';
-        } else {
-            $enableFields = $this->cObj->enableFields('tx_cal_calendar');
         }
         if ($pidList == '') {
             $result = $GLOBALS ['TYPO3_DB']->exec_SELECTquery('*', 'tx_cal_calendar', ' type IN (1,2) AND uid=' . $uid . ' ' . $enableFields);
@@ -71,12 +69,10 @@ class ICalendarService extends \TYPO3\CMS\Cal\Service\BaseService
      */
     public function findAll($pidList)
     {
-        $enableFields = '';
+        $enableFields = $this->cObj->enableFields('tx_cal_calendar');
         $orderBy = \TYPO3\CMS\Cal\Utility\Functions::getOrderBy('tx_cal_calendar');
         if (TYPO3_MODE == 'BE') {
             $enableFields = BackendUtility::BEenableFields('tx_cal_calendar') . ' AND tx_cal_calendar.deleted = 0';
-        } else {
-            $enableFields = $this->cObj->enableFields('tx_cal_calendar');
         }
         $return = array();
         if ($pidList == '') {
@@ -235,9 +231,9 @@ class ICalendarService extends \TYPO3\CMS\Cal\Service\BaseService
     
     /**
      *
-     * @param unknown $scheduler
-     * @param unknown $offset
-     * @param unknown $calendarUid
+     * @param \TYPO3\CMS\Scheduler\Scheduler $scheduler
+     * @param int $offset
+     * @param int $calendarUid
      * @throws \RuntimeException
      */
     public function createSchedulerTask(&$scheduler, $offset, $calendarUid)
@@ -436,7 +432,7 @@ class ICalendarService extends \TYPO3\CMS\Cal\Service\BaseService
             $GLOBALS ['TYPO3_DB']->exec_DELETEquery('tx_gabriel', 'crid in (' . $crids . ')');
         }
     }
-    
+
     /**
      * Returns a parsed ICalendar object of some ics content
      *
@@ -799,14 +795,14 @@ class ICalendarService extends \TYPO3\CMS\Cal\Service\BaseService
      *        	The save page id
      * @param string $cruserId
      *        	The create user id
-     * @param number $isTemp
+     * @param int $isTemp
      *        	are the records only temporary (1 == true, 0 == false)
-     * @param string $deleteNotUsedCategories
+     * @param bool $deleteNotUsedCategories
      *        	Should not assigned categories be deleted
      * @return array The inserted or updated event uids
      * @throws \RuntimeException
      */
-    public function insertCalEventsIntoDB($iCalendarComponentArray = array(), $calId, $pid = '', $cruserId = '', $isTemp = 1, $deleteNotUsedCategories = true)
+    public function insertCalEventsIntoDB($iCalendarComponentArray, $calId, $pid = '', $cruserId = '', $isTemp = 1, $deleteNotUsedCategories = true)
     {
         $insertedOrUpdatedEventUids = array();
         $insertedOrUpdatedCategoryUids = array();

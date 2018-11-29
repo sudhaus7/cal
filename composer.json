@@ -11,7 +11,7 @@
   },
   "require": {
     "typo3/cms-core": ">=7.6.2,<8.0",
-    "johngrogg/ics-parser": ">=2.0"
+    "sabre/vobject": "~4.1"
   },
   "autoload": {
     "psr-4": {
